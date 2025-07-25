@@ -19,4 +19,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [AuthController::class, 'logout']);
 
     Route::post('/availabilities', [AvailablityController::class, 'store']);
+    Route::get('/availabilities', [AvailablityController::class, 'index']);
 });
