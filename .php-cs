@@ -1,0 +1,82 @@
+<?php
+
+declare(strict_types=1);
+
+use PhpCsFixer\Config;
+
+return (new Config())
+    ->setRules([
+        '@PSR12'                 => true,
+        'array_syntax'           => ['syntax' => 'short'],
+        'binary_operator_spaces' => [
+            'operators' => [
+                '=>' => 'align_single_space_minimal',
+                '='  => 'align_single_space_minimal',
+                '.=' => 'align_single_space_minimal',
+                '+=' => 'align_single_space_minimal',
+                '-=' => 'align_single_space_minimal',
+            ],
+        ],
+        'blank_lines_before_namespace' => true,
+        'braces'                       => ['allow_single_line_closure' => true],
+        'cast_spaces'                  => true,
+        'class_attributes_separation'  => ['elements' => ['method' => 'one']],
+        'concat_space'                 => ['spacing' => 'one'],
+        'declare_equal_normalize'      => true,
+        'declare_strict_types'         => true,
+        'function_typehint_space'      => true,
+        'lowercase_cast'               => true,
+        'method_argument_space'        => ['on_multiline' => 'ensure_fully_multiline'],
+        'method_chaining_indentation'  => true,
+        'new_with_braces'              => true,
+        'no_extra_blank_lines'         => [
+            'tokens' => [
+                'curly_brace_block',
+                'extra',
+                'parenthesis_brace_block',
+                'square_brace_block',
+                'switch',
+                'case',
+                'default',
+                'throw',
+                'return',
+            ],
+        ],
+        'no_trailing_comma_in_singleline_array' => true,
+        'no_unused_imports'                     => true,
+        'no_whitespace_before_comma_in_array'   => true,
+        'no_whitespace_in_blank_line'           => true,
+        'object_operator_without_whitespace'    => true,
+        'ordered_class_elements'                => [
+            'order' => [
+                'use_trait',
+                'case',
+                'constant_public',
+                'constant_protected',
+                'constant_private',
+                'property_public',
+                'property_protected',
+                'property_private',
+                'construct',
+                'destruct',
+                'method_public_abstract',
+                'method_protected_abstract',
+                'method_public',
+                'method_protected',
+                'method_private',
+                'magic',
+            ],
+        ],
+        'ordered_imports'                 => ['sort_algorithm' => 'alpha'],
+        'phpdoc_indent'                   => true,
+        'single_line_comment_style'       => ['comment_types' => ['hash']],
+        'single_quote'                    => true,
+        'space_after_semicolon'           => true,
+        'ternary_operator_spaces'         => true,
+        'trailing_comma_in_multiline'     => true,
+        'trim_array_spaces'               => true,
+        'unary_operator_spaces'           => true,
+        'whitespace_after_comma_in_array' => ['ensure_single_space' => true],
+    ])
+    ->setIndent('    ')
+    ->setLineEnding("\n");

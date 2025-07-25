@@ -1,0 +1,9 @@
+{
+    "files.eol": "\n",
+    "php-cs-fixer.onsave": true,
+    "php-cs-fixer.config": ".php-cs",
+    "intelephense.environment.phpVersion": "8.4",
+    "git.ignoreLimitWarning": true,
+    "workbench.editor.enablePreview": false,
+    "php-cs-fixer.executablePath": "/home/luisperestrelo/.config/composer/vendor/bin/php-cs-fixer"
+}
