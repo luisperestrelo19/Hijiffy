@@ -8,13 +8,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Availability extends Model
+class Property extends Model
 {
     use SoftDeletes;
     use HasFactory;
 
     protected $fillable = [
-        'date',
-        'room_id',
+        'code',
     ];
+
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
 }

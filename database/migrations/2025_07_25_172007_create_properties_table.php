@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,8 +14,7 @@ return new class () extends Migration {
     {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
-            $table->uuid();
-            $table->string('name', 45);
+            $table->string('code', 45);
             $table->timestamps();
             $table->softDeletes();
         });

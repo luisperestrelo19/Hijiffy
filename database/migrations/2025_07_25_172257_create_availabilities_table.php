@@ -13,8 +13,7 @@ return new class () extends Migration {
         Schema::create('availabilities', function (Blueprint $table) {
             $table->id();
             $table->foreignId('room_id')->constrained();
-            $table->date('check_in');
-            $table->date('check_out');
+            $table->date('date');
             $table->timestamps();
             $table->softDeletes();
         });
