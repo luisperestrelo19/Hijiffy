@@ -7,6 +7,7 @@ namespace Tests\Feature;
 use App\Models\Property;
 use App\Models\Room;
 use App\Models\User;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
@@ -14,7 +15,6 @@ class AvailablityControllerTest extends TestCase
 {
     public function test_index_returns_properties_list()
     {
-        // Arrange: create properties and a user
         $user = User::factory()->create();
         Sanctum::actingAs($user);
 
@@ -135,5 +135,18 @@ class AvailablityControllerTest extends TestCase
         $response = $this->postJson(route('availabilities.store'), $requestData);
 
         $response->assertUnauthorized();
+    }
+
+    public function test_rate_limit_availabilities_exceed()
+    {
+        $user = User::factory()->create();
+        Sanctum::actingAs($user);
+        $this->withoutExceptionHandling([ThrottleRequestsException::class]);
+
+        for ($i = 0; $i < config('hijiffy.rate_limits.api.limit') + 1; $i++) {
+            $response = $this->getJson(route('availabilities.index'));
+        }
+
+        $response->assertTooManyRequests();
     }
 }

@@ -27,6 +27,6 @@ class RegisterController extends Controller
         return response()->json(LoginResource::make([
             'user'  => $user,
             'token' => $token,
-        ]));
+        ]), 201);
     }
 }

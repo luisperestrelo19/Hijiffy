@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Models\User;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Tests\TestCase;
 
 class RegisterControllerTest extends TestCase
@@ -20,7 +21,7 @@ class RegisterControllerTest extends TestCase
 
         $response = $this->postJson(route('register'), $payload);
 
-        $response->assertOk()
+        $response->assertCreated()
             ->assertJsonStructure([
                 'user' => ['id', 'name', 'email'],
                 'token',
@@ -63,5 +64,23 @@ class RegisterControllerTest extends TestCase
 
         $response->assertUnprocessable()
             ->assertJsonValidationErrors(['name', 'email', 'password']);
+    }
+
+    public function test_rate_limit_register_exceed()
+    {
+        $this->withoutExceptionHandling([ThrottleRequestsException::class]);
+
+        for ($i = 0; $i < config('hijiffy.rate_limits.guest.limit') + 1; $i++) {
+            $payload = [
+                'name'                  => 'Test User',
+                'email'                 => fake()->unique()->safeEmail(),
+                'password'              => 'secret123',
+                'password_confirmation' => 'secret123',
+            ];
+
+            $response = $this->postJson(route('register'), $payload);
+        }
+
+        $response->assertTooManyRequests();
     }
 }

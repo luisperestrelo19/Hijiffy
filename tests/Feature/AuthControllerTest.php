@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use App\Models\User;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -71,5 +72,19 @@ class AuthControllerTest extends TestCase
             ->assertJson([
                 'message' => 'Logged out',
             ]);
+    }
+
+    public function test_rate_limit_login_exceed()
+    {
+        $this->withoutExceptionHandling([ThrottleRequestsException::class]);
+
+        for ($i = 0; $i < config('hijiffy.rate_limits.guest.limit') + 1; $i++) {
+            $response = $this->postJson(route('login'), [
+            'email'    => 'test@example.com',
+            'password' => 'wrong-password',
+        ]);
+        }
+
+        $response->assertTooManyRequests();
     }
 }

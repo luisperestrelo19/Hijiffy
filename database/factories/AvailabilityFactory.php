@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Models\Room;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class AvailabilityFactory extends Factory
     public function definition(): array
     {
         return [
-            'room_id' => RoomFactory::factory(),
+            'room_id' => Room::factory(),
             'date'    => $this->faker->dateTimeBetween('now', '+1 year'),
         ];
     }

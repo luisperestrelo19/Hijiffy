@@ -124,3 +124,44 @@ php artisan hijiffy:import-properties
 The data file to import should be placed in the same folder as the `ImportProperties` command. Make sure your JSON file is located alongside `app/Console/Commands/ImportProperties.php` before running the command.
 
 You can find the command implementation in `app/Console/Commands/ImportProperties.php`.
+
+
+### 📦 API responses
+
+The API always returns a JSON object. It does not include a specific property indicating success or failure. I
+nstead, the outcome of the request is determined by the HTTP status code.
+
+### ❌ Example: Validation Error Response
+
+When submitting invalid data to a form endpoint (e.g. `POST /api/register`), the API responds with an HTTP 422 Unprocessable Entity status and a JSON body like the following:
+
+```json
+{
+  "message": "The name field is required. (and 2 more errors)",
+  "errors": {
+    "name": [
+      "The name field is required."
+    ],
+    "email": [
+      "The email field is required."
+    ],
+    "password": [
+      "The password field is required."
+    ]
+  }
+}
+```
+### ✅ Example: Successful Response
+
+On a successful request (e.g. `POST /api/login`), the API returns a JSON object like this, along with a 200 OK status code:
+
+```json
+{
+  "user": {
+    "id": 1,
+    "name": "Luís Perestrelo",
+    "email": "luisperestrelo19@gmail.com"
+  },
+  "token": "8|ndhvf5iXmQwGOYijR84qP42Os0uHs5D3tsWxH1oR962e8de4"
+}
+```

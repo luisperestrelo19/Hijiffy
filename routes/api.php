@@ -15,9 +15,9 @@ Route::middleware('throttle:guest')->group(function () {
 
 Route::middleware('auth:sanctum', 'throttle:api')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::post('/availabilities', [AvailablityController::class, 'store'])->name('availabilities.store')->middleware('throttle:sync');
-    Route::get('/availabilities', [AvailablityController::class, 'index'])->name('availabilities.index');
 });
 
+Route::post('/availabilities', [AvailablityController::class, 'store'])->name('availabilities.store')->middleware('throttle:sync');
+Route::get('/availabilities', [AvailablityController::class, 'index'])->name('availabilities.index');
 Route::post('/webhook', [DialogflowController::class, 'handleWebhook'])
     ->name('webhook');
