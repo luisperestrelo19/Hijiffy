@@ -141,9 +141,9 @@ A custom Artisan command is available to import properties data from a JSON file
 ```bash
 php artisan hijiffy:import-properties
 ```
-The data file to import should be placed in the same folder as the `ImportProperties` command. Make sure your JSON file is located alongside `app/Console/Commands/ImportProperties.php` before running the command.
+The data file to import should be placed in the same folder as the `ImportProperties` command. Make sure your JSON file is located alongside `app/Console/Commands/ImportProperties/ImportProperties.php` before running the command.
 
-You can find the command implementation in `app/Console/Commands/ImportProperties.php`.
+You can find the command implementation in `app/Console/Commands/ImportProperties/ImportProperties.php`.
 
 
 ### 📦 API responses
