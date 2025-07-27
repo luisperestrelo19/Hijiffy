@@ -15,9 +15,12 @@ class AvailabilityService
         );
 
         foreach ($data['rooms'] as $room) {
-            $newRoom = $property->rooms()->create(
+            //this way we can create a room that doest exists, but if it does we can have multiple availabilities for the same room
+            $newRoom = $property->rooms()->firstOrCreate(
                 [
-                    'code'       => $room['room_id'],
+                    'code' => $room['room_id'],
+                ],
+                [
                     'max_guests' => $room['max_guests'],
                     'price'      => $room['price'],
                 ]

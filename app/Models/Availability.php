@@ -17,4 +17,9 @@ class Availability extends Model
         'date',
         'room_id',
     ];
+
+    public function scopeBetweenDates($query, $checkIn, $checkOut)
+    {
+        return $query->whereBetween('date', [$checkIn, $checkOut]);
+    }
 }

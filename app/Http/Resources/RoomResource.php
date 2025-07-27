@@ -17,8 +17,7 @@ class RoomResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'             => $this->id,
-            'code'           => $this->code,
+            'room_id'        => $this->code,
             'max_guests'     => $this->max_guests,
             'price'          => $this->price,
             'availabilities' => AvailabilityResource::collection($this->whenLoaded('availabilities')),

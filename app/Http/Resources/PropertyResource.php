@@ -17,9 +17,8 @@ class PropertyResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'    => $this->id,
-            'code'  => $this->code,
-            'rooms' => RoomResource::collection($this->whenLoaded('rooms')),
+            'property_id' => $this->code,
+            'rooms'       => RoomResource::collection($this->whenLoaded('rooms')),
         ];
     }
 }

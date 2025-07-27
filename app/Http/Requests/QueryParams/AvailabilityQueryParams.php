@@ -17,8 +17,8 @@ class AvailabilityQueryParams extends FormRequest
     {
         return [
             'property_id'      => ['string'],
-            'check_in'         => ['date', 'after_or_equal:today', 'date_format:Y-m-d'],
-            'check_out'        => ['date', 'after:check_in', 'date_format:Y-m-d'],
+            'check_in'         => ['date', 'after_or_equal:today', 'date_format:Y-m-d', 'required_with:check_out'],
+            'check_out'        => ['date', 'after_or_equal:check_in', 'date_format:Y-m-d', 'required_with:check_in'],
             'number_of_guests' => ['integer'],
         ];
     }
