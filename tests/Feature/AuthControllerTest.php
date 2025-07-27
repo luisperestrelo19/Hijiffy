@@ -68,10 +68,7 @@ class AuthControllerTest extends TestCase
 
         $response = $this->postJson(route('logout'));
 
-        $response->assertOk()
-            ->assertJson([
-                'message' => 'Logged out',
-            ]);
+        $response->assertNoContent();
     }
 
     public function test_rate_limit_login_exceed()

@@ -10,6 +10,13 @@ use Illuminate\Http\Request;
 
 class DialogflowController extends Controller
 {
+    /**
+     * Handle the Dialogflow webhook request.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @unauthenticated
+     */
     public function handleWebhook(Request $request)
     {
         $data       = $request->all();

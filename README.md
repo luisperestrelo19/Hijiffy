@@ -24,6 +24,14 @@ This project is a Laravel microservice designed to manage availability reservati
 | POST       | /api/register       | RegisterController@register        | Register new user                          |
 | POST       | /api/webhook        | DialogflowController@handleWebhook | Receive requests from Dialogflow           |
 
+## 📄 Documentation
+
+To simplify the implementation and maintenance of the API documentation, the project uses the Laravel package [Scramble](https://scramble.dedoc.co/). This tool automatically generates an interactive and developer-friendly interface for exploring all available API endpoints.
+
+Once the server is running, the documentation can be accessed at:
+
+🔗 http://localhost:8000/docs/api#/
+
 
 ## 🗄️ Database Configuration
 
@@ -64,6 +72,18 @@ php artisan serve
 
 - Export included in the `dialogflow/` folder with .json files for each Intent
 - Webhook: POST to `/api/webhook`
+
+
+### 🌐 Testing Dialogflow Webhook with ngrok
+
+To test the Dialogflow webhook locally during development, ngrok was used to expose the local Laravel server to the internet:
+
+https://ngrok.com/
+
+```bash
+php artisan serve
+ngrok http 8000
+```
 
 ## 🧪 Tests
 

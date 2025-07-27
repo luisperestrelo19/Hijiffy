@@ -17,7 +17,7 @@ class AvailablityController extends Controller
     {
         $properties = Property::search($request)->get();
 
-        return response()->json(AvailabilitiesSearchResource::collection($properties), 200);
+        return response()->json(AvailabilitiesSearchResource::collection($properties));
     }
 
     public function store(StoreAvailabilityRequest $request)

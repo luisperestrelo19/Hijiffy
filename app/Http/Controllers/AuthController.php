@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\LoginResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    /**
+     * Handle the user login.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @unauthenticated
+     */
     public function login(Request $request)
     {
         $request->validate([
@@ -25,16 +33,16 @@ class AuthController extends Controller
 
         $token = $user->createToken('api-token')->plainTextToken;
 
-        return response()->json([
-            'token' => $token,
+        return response()->json(LoginResource::make([
             'user'  => $user,
-        ]);
+            'token' => $token,
+        ]));
     }
 
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
 
-        return response()->json(['message' => 'Logged out']);
+        return response()->noContent();
     }
 }

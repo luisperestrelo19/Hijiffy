@@ -12,6 +12,13 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
+    /**
+     * Handle the user registration.
+     *
+     * @param RegisterRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @unauthenticated
+     */
     public function register(RegisterRequest $request)
     {
         $user = DB::transaction(function () use ($request) {

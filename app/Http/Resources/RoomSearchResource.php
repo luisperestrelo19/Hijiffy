@@ -7,7 +7,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PropertyResource extends JsonResource
+class RoomSearchResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,8 +17,10 @@ class PropertyResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'property_id' => $this->code,
-            'rooms' => RoomResource::collection($this->whenLoaded('rooms')),
+            'room_id'     => $this->code,
+            'max_guests'  => $this->max_guests,
+            'daily_price' => $this->price,
+            'total_price' => $this->price * $this->available_dates_count,
         ];
     }
 }

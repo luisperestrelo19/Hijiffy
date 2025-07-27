@@ -16,17 +16,9 @@ class AvailabilitiesSearchResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-
         return [
             'property_id' => $this->code,
-            'rooms'       => $this->rooms->map(function ($room) {
-                return [
-                    'room_id'     => $room->code,
-                    'max_guests'  => $room->max_guests,
-                    'daily_price' => $room->price,
-                    'total_price' => $room->price * $room->available_dates_count,
-                ];
-            }),
+            'rooms'       => RoomSearchResource::collection($this->rooms),
         ];
     }
 }
