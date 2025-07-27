@@ -1,0 +1,107 @@
+[
+    {
+        "property_id": "p1",
+        "rooms": [
+            {
+                "room_id": "r1",
+                "date": "2025-08-02",
+                "max_guests": 1,
+                "price": 66.86
+            },
+            {
+                "room_id": "r3",
+                "date": "2025-08-01",
+                "max_guests": 4,
+                "price": 97.43
+            },
+            {
+                "room_id": "r2",
+                "date": "2025-08-02",
+                "max_guests": 3,
+                "price": 50.39
+            },
+            {
+                "room_id": "r3",
+                "date": "2025-08-04",
+                "max_guests": 3,
+                "price": 107.67
+            },
+            {
+                "room_id": "r3",
+                "date": "2025-08-03",
+                "max_guests": 4,
+                "price": 63.39
+            }
+        ]
+    },
+    {
+        "property_id": "p2",
+        "rooms": [
+            {
+                "room_id": "r2",
+                "date": "2025-08-03",
+                "max_guests": 3,
+                "price": 100.84
+            },
+            {
+                "room_id": "r3",
+                "date": "2025-08-02",
+                "max_guests": 3,
+                "price": 127.27
+            },
+            {
+                "room_id": "r1",
+                "date": "2025-08-02",
+                "max_guests": 4,
+                "price": 69.18
+            },
+            {
+                "room_id": "r2",
+                "date": "2025-08-01",
+                "max_guests": 4,
+                "price": 85.12
+            },
+            {
+                "room_id": "r1",
+                "date": "2025-08-03",
+                "max_guests": 1,
+                "price": 70.77
+            }
+        ]
+    },
+    {
+        "property_id": "p3",
+        "rooms": [
+            {
+                "room_id": "r2",
+                "date": "2025-08-04",
+                "max_guests": 4,
+                "price": 146.44
+            },
+            {
+                "room_id": "r3",
+                "date": "2025-08-04",
+                "max_guests": 4,
+                "price": 87.66
+            },
+            {
+                "room_id": "r3",
+                "date": "2025-08-03",
+                "max_guests": 1,
+                "price": 144.89
+            },
+            {
+                "room_id": "r3",
+                "date": "2025-08-01",
+                "max_guests": 2,
+                "price": 75.91
+            },
+            {
+                "room_id": "r2",
+                "date": "2025-08-03",
+                "max_guests": 2,
+                "price": 125.82
+            }
+        ]
+    }
+]

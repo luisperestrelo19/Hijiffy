@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\ImportProperties;
 
 use App\Services\AvailabilityService;
 use Illuminate\Console\Command;
@@ -28,12 +28,7 @@ class ImportProperties extends Command
      */
     public function handle()
     {
-        $path = storage_path('app/private/property_availability.json');
-        if (!file_exists($path)) {
-            $this->error("File not found: $path");
-            return 1;
-        }
-
+        $path    = $this->getFilePath();
         $content = file_get_contents($path);
         if ($content === false) {
             $this->error("Failed to read file: $path");
@@ -43,5 +38,16 @@ class ImportProperties extends Command
         foreach (json_decode($content, true) as $propertyData) {
             (new AvailabilityService())->insertProperty($propertyData);
         }
+    }
+
+    public function getFilePath()
+    {
+        $path = __DIR__ . '/property_availability.json';
+        if (!file_exists($path)) {
+            $this->error("File not found: $path");
+            return 1;
+        }
+
+        return $path;
     }
 }
