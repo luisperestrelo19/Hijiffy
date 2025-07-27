@@ -31,7 +31,7 @@ class ImportProperties extends Command
         $path = $this->getFilePath();
 
         if (!file_exists($path)) {
-            $this->error("File not found");
+            $this->error('File not found');
             return 1;
         }
 
