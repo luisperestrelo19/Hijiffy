@@ -58,7 +58,7 @@ class ImportPropertiesTest extends TestCase
         $this->app->instance(ImportProperties::class, $mock);
 
         $this->artisan('hijiffy:import-properties')
-            ->expectsOutput('Error reading file')
+            ->expectsOutput('File not found')
             ->assertExitCode(1);
     }
 }

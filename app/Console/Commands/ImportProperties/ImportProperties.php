@@ -30,12 +30,12 @@ class ImportProperties extends Command
     {
         $path = $this->getFilePath();
 
-        try {
-            $content = file_get_contents($path);
-        } catch (\Throwable $th) {
-            $this->error('Error reading file');
+        if (!file_exists($path)) {
+            $this->error("File not found");
             return 1;
         }
+
+        $content = file_get_contents($path);
 
         foreach (json_decode($content, true) as $propertyData) {
             (new AvailabilityService())->insertProperty($propertyData);
@@ -46,12 +46,6 @@ class ImportProperties extends Command
 
     public function getFilePath()
     {
-        $path = __DIR__ . '/property_availability.json';
-        if (!file_exists($path)) {
-            $this->error("File not found: $path");
-            return 1;
-        }
-
-        return $path;
+        return __DIR__ . '/property_availability.json';
     }
 }

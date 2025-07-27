@@ -24,9 +24,4 @@ class Room extends Model
     {
         return $this->hasMany(Availability::class);
     }
-
-    public function property()
-    {
-        return $this->belongsTo(Property::class);
-    }
 }
