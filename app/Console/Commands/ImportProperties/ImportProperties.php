@@ -14,7 +14,7 @@ class ImportProperties extends Command
      *
      * @var string
      */
-    protected $signature = 'app:import-properties';
+    protected $signature = 'hijiffy:import-properties';
 
     /**
      * The console command description.
@@ -28,16 +28,20 @@ class ImportProperties extends Command
      */
     public function handle()
     {
-        $path    = $this->getFilePath();
-        $content = file_get_contents($path);
-        if ($content === false) {
-            $this->error("Failed to read file: $path");
+        $path = $this->getFilePath();
+
+        try {
+            $content = file_get_contents($path);
+        } catch (\Throwable $th) {
+            $this->error('Error reading file');
             return 1;
         }
 
         foreach (json_decode($content, true) as $propertyData) {
             (new AvailabilityService())->insertProperty($propertyData);
         }
+
+        $this->info('Properties imported successfully.');
     }
 
     public function getFilePath()
