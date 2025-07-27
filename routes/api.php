@@ -19,4 +19,5 @@ Route::middleware('auth:sanctum', 'throttle:api')->group(function () {
     Route::get('/availabilities', [AvailablityController::class, 'index'])->name('availabilities.index');
 });
 
-Route::post('/webhook', [DialogflowController::class, 'handleWebhook']);
+Route::post('/webhook', [DialogflowController::class, 'handleWebhook'])
+    ->name('webhook');

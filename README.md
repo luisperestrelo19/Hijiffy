@@ -1,61 +1,126 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Hijiffy Backend Challenge
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📚 System Overview
 
-## About Laravel
+This project is a Laravel microservice designed to manage availability reservations, with integration via webhook with a Dialogflow agent.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### 🧱 Architecture
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- Laravel 12
+- REST API
+- Dialogflow ES (Export included)
+- Authentication via Laravel Sanctum tokens
+- Validation using FormRequests
+- Rate limiting
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🚀 Available Endpoints
 
-## Learning Laravel
+| Method     | Endpoint            | Controller                        | Description                                |
+|------------|---------------------|------------------------------------|--------------------------------------------|
+| POST       | /api/availabilities | AvailablityController@store        | Create new availability                    |
+| GET        | /api/availabilities | AvailablityController@index        | List availabilities                        |
+| POST       | /api/login          | AuthController@login               | Authenticate user                          |
+| POST       | /api/logout         | AuthController@logout              | Logout user                                |
+| POST       | /api/register       | RegisterController@register        | Register new user                          |
+| POST       | /api/webhook        | DialogflowController@handleWebhook | Receive requests from Dialogflow           |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🗄️ Database Configuration
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+You can use MySQL database, or for quick setup and testing, SQLite is recommended.
 
-## Laravel Sponsors
+To use SQLite:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+1. Set your `.env` file to use SQLite:
+    ```
+    DB_CONNECTION=sqlite
+    ```
 
-### Premium Partners
+2. If the `database/database.sqlite` file does not exist, running `php artisan migrate` will prompt you to create it:
+    ```
+    WARN  The SQLite database configured for this application does not exist: database/database.sqlite.
+    ```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+    Type `yes` when prompted, and Laravel will create the file automatically.
 
-## Contributing
+Run migrations after configuring your database:
+```bash
+php artisan migrate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## ▶️ How to run the project
 
-## Code of Conduct
+```bash
+git clone https://github.com/luisperestrelo19/Hijiffy
+cd hijiffy-backend
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🤖 Dialogflow Agent
 
-## Security Vulnerabilities
+- Export included in the `dialogflow/` folder with .json files for each Intent
+- Webhook: POST to `/api/webhook`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 🧪 Tests
 
-## License
+```bash
+php artisan test
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 🚦 Rate Limiting & Caching
+
+### Configuration
+```php
+'rate_limits' => [
+    'api' => [
+        'limit' => env('HIIJIFFY_RATE_LIMIT_API', 100),
+    ],
+    'sync-endpoint' => [
+        'limit' => env('HIIJIFFY_RATE_LIMIT_SYNC', 10),
+    ],
+    'guest' => [
+        'limit' => env('HIIJIFFY_RATE_LIMIT_GUEST', 5),
+    ],
+],
+```
+
+### RateLimiter Middleware
+```php
+RateLimiter::for('api', function (Request $request) {
+    return Limit::perMinute(config('hijiffy.rate_limits.api.limit'))
+        ->by($request->user()->id);
+});
+```
+Limits the number of requests per minute for authenticated users based on user ID, 100 is the base value.
+
+```php
+RateLimiter::for('sync', function (Request $request) {
+    return Limit::perMinute(config('hijiffy.rate_limits.sync-endpoint.limit'))
+        ->by($request->user()->id);
+});
+```
+Applies to specific sensitive sync endpoints, also keyed by user ID. The default value is set to 10 because these requests require more processing than others.
+
+```php
+RateLimiter::for('guest', function (Request $request) {
+    return Limit::perMinute(config('hijiffy.rate_limits.guest.limit'))
+        ->by($request->ip());
+});
+```
+Limits requests from unauthenticated users based on their IP address. The default limit is set to 5, as this rate limiter is primarily used for registration and authentication endpoints. This helps prevent abuse and protects the system from malicious actors.
+
+## 📥 ImportProperties Command
+
+A custom Artisan command is available to import properties data from a JSON file.
+
+### Usage
+```bash
+php artisan hijiffy:import-properties
+```
+The data file to import should be placed in the same folder as the `ImportProperties` command. Make sure your JSON file is located alongside `app/Console/Commands/ImportProperties.php` before running the command.
+
+You can find the command implementation in `app/Console/Commands/ImportProperties.php`.
