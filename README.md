@@ -56,6 +56,7 @@ Run migrations after configuring your database:
 php artisan migrate
 ```
 
+There is a database structure file (database.mwb) located inside the database folder. This file is intended to be opened with MySQL Workbench.
 ## ▶️ How to run the project
 
 ```bash
