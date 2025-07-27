@@ -12,9 +12,7 @@ class DialogflowController extends Controller
 {
     public function handleWebhook(Request $request)
     {
-        // Recupera os dados enviados pelo Dialogflow
-        $data = $request->all();
-
+        $data       = $request->all();
         $parameters = $data['queryResult']['parameters'] ?? [];
 
         $searchFields = [
@@ -25,7 +23,6 @@ class DialogflowController extends Controller
 
         $properties = Property::search($searchFields)->get();
 
-        // Se estiver disponível, envia a resposta de confirmação
         if ($properties->isNotEmpty()) {
             $pluckedProperties = $properties->pluck('rooms')->flatten();
             $roomTotal         = $pluckedProperties->count();

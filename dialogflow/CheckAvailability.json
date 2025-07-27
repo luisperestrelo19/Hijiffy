@@ -1,0 +1,223 @@
+{
+  "id": "51ad36c4-a6e8-4977-8d74-8f33e7a2ab92",
+  "name": "CheckAvailability",
+  "auto": true,
+  "condition": "",
+  "conditionalFollowupEvents": [],
+  "conditionalResponses": [],
+  "context": [],
+  "contexts": [],
+  "endInteraction": false,
+  "events": [],
+  "fallbackIntent": false,
+  "liveAgentHandoff": false,
+  "parentId": null,
+  "followUpIntents": [],
+  "priority": 500000,
+  "responses": [
+    {
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [
+        {
+          "noInputPromptMessages": [],
+          "noMatchPromptMessages": [],
+          "promptMessages": [],
+          "defaultValue": "",
+          "name": "guests",
+          "dataType": "@sys.number",
+          "isList": false,
+          "required": false,
+          "prompts": [],
+          "value": "$guests",
+          "outputDialogContexts": []
+        },
+        {
+          "noInputPromptMessages": [],
+          "noMatchPromptMessages": [],
+          "promptMessages": [],
+          "defaultValue": "",
+          "name": "check_in",
+          "dataType": "@sys.date",
+          "isList": false,
+          "required": false,
+          "prompts": [],
+          "value": "$check_in",
+          "outputDialogContexts": []
+        },
+        {
+          "noInputPromptMessages": [],
+          "noMatchPromptMessages": [],
+          "promptMessages": [],
+          "defaultValue": "",
+          "name": "check_out",
+          "dataType": "@sys.date",
+          "isList": false,
+          "required": false,
+          "prompts": [],
+          "value": "$check_out",
+          "outputDialogContexts": []
+        }
+      ],
+      "defaultResponsePlatforms": {},
+      "messages": [
+        {
+          "type": "message",
+          "condition": "",
+          "speech": []
+        }
+      ],
+      "resetContexts": false
+    }
+  ],
+  "rootParentId": null,
+  "templates": [],
+  "userSays": [
+    {
+      "isTemplate": false,
+      "data": [
+        {
+          "text": "Is there a room available for ",
+          "userDefined": false
+        },
+        {
+          "text": "2",
+          "userDefined": false,
+          "alias": "guests",
+          "meta": "@sys.number"
+        },
+        {
+          "text": " guests from ",
+          "userDefined": false
+        },
+        {
+          "text": "August 3rd",
+          "userDefined": false,
+          "alias": "check_in",
+          "meta": "@sys.date"
+        },
+        {
+          "text": " to ",
+          "userDefined": false
+        },
+        {
+          "text": "August 4th",
+          "userDefined": false,
+          "alias": "check_out",
+          "meta": "@sys.date"
+        },
+        {
+          "text": "?",
+          "userDefined": false
+        }
+      ],
+      "count": 0,
+      "id": "11c0ec9b-99d9-471f-94f9-fd9c75629954",
+      "updated": null
+    },
+    {
+      "isTemplate": false,
+      "data": [
+        {
+          "text": "Do you have any rooms available from ",
+          "userDefined": false
+        },
+        {
+          "text": "August 3rd",
+          "userDefined": true,
+          "alias": "check_in",
+          "meta": "@sys.date"
+        },
+        {
+          "text": " to ",
+          "userDefined": false
+        },
+        {
+          "text": "August 4th",
+          "userDefined": true,
+          "alias": "check_out",
+          "meta": "@sys.date"
+        }
+      ],
+      "count": 0,
+      "id": "25403992-148d-45d1-b68e-c2b4fe6821df",
+      "updated": null
+    },
+    {
+      "isTemplate": false,
+      "data": [
+        {
+          "text": "Do you have any rooms free from ",
+          "userDefined": false
+        },
+        {
+          "text": "10-10-2025",
+          "userDefined": true,
+          "alias": "check_in",
+          "meta": "@sys.date"
+        },
+        {
+          "text": " to ",
+          "userDefined": false
+        },
+        {
+          "text": "10-11-2025",
+          "userDefined": true,
+          "alias": "check_out",
+          "meta": "@sys.date"
+        },
+        {
+          "text": "?",
+          "userDefined": false
+        }
+      ],
+      "count": 0,
+      "id": "db675f0b-3d74-4736-8a17-43bfc15e88d5",
+      "updated": null
+    },
+    {
+      "isTemplate": false,
+      "data": [
+        {
+          "text": "I want to book from ",
+          "userDefined": false
+        },
+        {
+          "text": "July 10",
+          "userDefined": true,
+          "alias": "check_in",
+          "meta": "@sys.date"
+        },
+        {
+          "text": " to ",
+          "userDefined": false
+        },
+        {
+          "text": "July 12",
+          "userDefined": true,
+          "alias": "check_out",
+          "meta": "@sys.date"
+        },
+        {
+          "text": " for ",
+          "userDefined": false
+        },
+        {
+          "text": "2",
+          "userDefined": false,
+          "alias": "guests",
+          "meta": "@sys.number"
+        },
+        {
+          "text": " people",
+          "userDefined": false
+        }
+      ],
+      "count": 0,
+      "id": "c9a3071e-6652-4182-b725-0fee89379add",
+      "updated": null
+    }
+  ],
+  "webhookForSlotFilling": true,
+  "webhookUsed": true
+}

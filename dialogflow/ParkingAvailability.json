@@ -1,0 +1,65 @@
+{
+  "id": "722250ea-a549-4a82-8753-cd107faff676",
+  "name": "ParkingAvailability",
+  "auto": true,
+  "condition": "",
+  "conditionalFollowupEvents": [],
+  "conditionalResponses": [],
+  "context": [],
+  "contexts": [],
+  "endInteraction": false,
+  "events": [],
+  "fallbackIntent": false,
+  "liveAgentHandoff": false,
+  "parentId": null,
+  "followUpIntents": [],
+  "priority": 500000,
+  "responses": [
+    {
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [],
+      "defaultResponsePlatforms": {},
+      "messages": [
+        {
+          "type": "message",
+          "condition": "",
+          "speech": [
+            "Yes, we have free parking available."
+          ]
+        }
+      ],
+      "resetContexts": false
+    }
+  ],
+  "rootParentId": null,
+  "templates": [],
+  "userSays": [
+    {
+      "isTemplate": false,
+      "data": [
+        {
+          "text": "Do you have parking?",
+          "userDefined": false
+        }
+      ],
+      "count": 0,
+      "id": "bdcb00c3-fdd3-433b-a0ca-831a327ead41",
+      "updated": null
+    },
+    {
+      "isTemplate": false,
+      "data": [
+        {
+          "text": "Is there parking available?",
+          "userDefined": false
+        }
+      ],
+      "count": 0,
+      "id": "9ae35cb0-ba46-4949-a973-a2c4c2e8238e",
+      "updated": null
+    }
+  ],
+  "webhookForSlotFilling": false,
+  "webhookUsed": false
+}

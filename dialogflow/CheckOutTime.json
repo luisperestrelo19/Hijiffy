@@ -1,0 +1,65 @@
+{
+  "id": "5f77d867-484f-4bb2-bdb0-6efde94d9379",
+  "name": "CheckOutTime",
+  "auto": true,
+  "condition": "",
+  "conditionalFollowupEvents": [],
+  "conditionalResponses": [],
+  "context": [],
+  "contexts": [],
+  "endInteraction": false,
+  "events": [],
+  "fallbackIntent": false,
+  "liveAgentHandoff": false,
+  "parentId": null,
+  "followUpIntents": [],
+  "priority": 500000,
+  "responses": [
+    {
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [],
+      "defaultResponsePlatforms": {},
+      "messages": [
+        {
+          "type": "message",
+          "condition": "",
+          "speech": [
+            "Check-out time is at 11 AM."
+          ]
+        }
+      ],
+      "resetContexts": false
+    }
+  ],
+  "rootParentId": null,
+  "templates": [],
+  "userSays": [
+    {
+      "isTemplate": false,
+      "data": [
+        {
+          "text": "When do I need to check out?",
+          "userDefined": false
+        }
+      ],
+      "count": 0,
+      "id": "c418ba82-8b5b-4299-ae07-6399c2eaea3a",
+      "updated": null
+    },
+    {
+      "isTemplate": false,
+      "data": [
+        {
+          "text": "What time is check-out?",
+          "userDefined": false
+        }
+      ],
+      "count": 0,
+      "id": "e313874d-d2c9-4974-9f73-b41e33962b89",
+      "updated": null
+    }
+  ],
+  "webhookForSlotFilling": false,
+  "webhookUsed": false
+}

@@ -1,0 +1,65 @@
+{
+  "id": "f72357e4-362d-4758-b2c0-446f0839164e",
+  "name": "CheckInTime",
+  "auto": true,
+  "condition": "",
+  "conditionalFollowupEvents": [],
+  "conditionalResponses": [],
+  "context": [],
+  "contexts": [],
+  "endInteraction": false,
+  "events": [],
+  "fallbackIntent": false,
+  "liveAgentHandoff": false,
+  "parentId": null,
+  "followUpIntents": [],
+  "priority": 500000,
+  "responses": [
+    {
+      "action": "",
+      "affectedContexts": [],
+      "parameters": [],
+      "defaultResponsePlatforms": {},
+      "messages": [
+        {
+          "type": "message",
+          "condition": "",
+          "speech": [
+            "Check-in time is at 3 PM."
+          ]
+        }
+      ],
+      "resetContexts": false
+    }
+  ],
+  "rootParentId": null,
+  "templates": [],
+  "userSays": [
+    {
+      "isTemplate": false,
+      "data": [
+        {
+          "text": "What time do I check in?",
+          "userDefined": false
+        }
+      ],
+      "count": 0,
+      "id": "26f1a598-3a64-422c-bcc3-9e11c11ff776",
+      "updated": null
+    },
+    {
+      "isTemplate": false,
+      "data": [
+        {
+          "text": "When can I check in?",
+          "userDefined": false
+        }
+      ],
+      "count": 0,
+      "id": "8cbd4d90-cc01-49cc-8739-ca04fbf393e8",
+      "updated": null
+    }
+  ],
+  "webhookForSlotFilling": false,
+  "webhookUsed": false
+}
