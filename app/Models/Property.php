@@ -26,17 +26,23 @@ class Property extends Model
         return $this->hasMany(Room::class);
     }
 
-    public function scopeSearch($query, $request)
+    public function scopeSearch($query, $searchFields)
     {
-        return $query->when($request->input('property_id'), fn ($q, $search) => $q->whereLikeInsensitive('properties.code', $search))
-            ->when($request->input('number_of_guests'), function ($q, $search) {
+        if ($searchFields instanceof \Illuminate\Http\Request) {
+            $search = $searchFields->toArray();
+        } else {
+            $search = $searchFields;
+        }
+
+        return $query->when($search['property_id'] ?? null, fn ($q) => $q->whereLikeInsensitive('properties.code', $search['property_id']))
+            ->when($search['number_of_guests'] ?? null, function ($q, $search) {
                 //this way i can only get properties that have rooms with the exact number of guests
                 $q->with(['rooms' => fn ($q) => $q->where('rooms.max_guests', '>=', $search)])
                     ->whereHas('rooms', fn ($q) => $q->where('rooms.max_guests', '>=', $search));
             })
-            ->when($request->input('check_in') && $request->input('check_out'), function ($query) use ($request) {
-                $checkIn  = $request->input('check_in');
-                $checkOut = $request->input('check_out');
+            ->when($search['check_in'] ?? null && $search['check_out'] ?? null, function ($query) use ($search) {
+                $checkIn  = $search['check_in'];
+                $checkOut = $search['check_out'];
                 $days     = Carbon::parse($checkIn)->diffInDays(Carbon::parse($checkOut));
 
                 $query->whereHas('rooms.availabilities', fn ($q) => $q->betweenDates($checkIn, $checkOut))

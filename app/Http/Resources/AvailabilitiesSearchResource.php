@@ -16,6 +16,7 @@ class AvailabilitiesSearchResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
         return [
             'property_id' => $this->code,
             'rooms'       => $this->rooms->map(function ($room) {
