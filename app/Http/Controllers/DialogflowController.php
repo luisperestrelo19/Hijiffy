@@ -22,15 +22,21 @@ class DialogflowController extends Controller
         $data       = $request->all();
         $parameters = $data['queryResult']['parameters'] ?? [];
 
-        $searchFields = [
-            'number_of_guests' => $parameters['guests'] ?? null,
-            'check_in'         => !empty($parameters['check_in']) ? Carbon::parse($parameters['check_in'])->format('Y-m-d') : null,
-            'check_out'        => !empty($parameters['check_out']) ? Carbon::parse($parameters['check_out'])->format('Y-m-d') : null,
-        ];
+        try {
+            $searchFields = [
+                'number_of_guests' => $parameters['guests'] ?? null,
+                'check_in'         => !empty($parameters['check_in']) ? Carbon::parse($parameters['check_in'])->format('Y-m-d') : null,
+                'check_out'        => !empty($parameters['check_out']) ? Carbon::parse($parameters['check_out'])->format('Y-m-d') : null,
+            ];
+        } catch (\Exception $e) {
+            return response()->json([
+                'fulfillmentText' => "Sorry, there was an error processing the dates provided.",
+            ]);
+        }
 
         $properties = Property::search($searchFields)->get();
 
-        if ($properties->isNotEmpty()) {
+        if ($properties->isNotEmpty() && $properties->pluck('rooms')->flatten()->isNotEmpty()) {
             $pluckedProperties = $properties->pluck('rooms')->flatten();
             $roomTotal         = $pluckedProperties->count();
             $price             = $pluckedProperties->sortBy('price')->first()->price;
