@@ -20,3 +20,7 @@ Route::middleware('auth:sanctum', 'throttle:api')->group(function () {
 });
 
 Route::post('/webhook', [DialogflowController::class, 'handleWebhook'])->name('webhook');
+
+Route::get('/', function () {
+    return response()->json(['message' => 'Welcome to the API!']);
+})->name('api.welcome');

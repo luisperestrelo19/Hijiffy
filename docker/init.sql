@@ -1,0 +1,5 @@
+CREATE DATABASE IF NOT EXISTS hijiffy;
+
+CREATE USER IF NOT EXISTS 'app_user'@'%' IDENTIFIED BY 'app_password';
+GRANT ALL PRIVILEGES ON hijiffy.* TO 'app_user'@'%';
+FLUSH PRIVILEGES;

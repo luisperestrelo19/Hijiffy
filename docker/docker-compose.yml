@@ -1,0 +1,16 @@
+
+services:
+    mariadb:
+        image: mariadb:11.3
+        container_name: mariadb_laravel
+        restart: unless-stopped
+        ports:
+            - "3306:3306"
+        environment:
+            MARIADB_ROOT_PASSWORD: root
+        volumes:
+            - mariadb_data:/var/lib/mysql
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+volumes:
+    mariadb_data:
