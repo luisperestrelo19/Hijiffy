@@ -8,9 +8,10 @@ This project is a Laravel microservice designed to manage availability reservati
 
 - Laravel 12
 - REST API
-- Dialogflow ES (Export included)
-- Authentication via Laravel Sanctum tokens
 - Validation using FormRequests
+- Response using JsonResource.
+- Authentication via Laravel Sanctum tokens
+- Dialogflow ES (Export included)
 - Rate limiting
 
 ## 🚀 Available Endpoints
@@ -33,45 +34,51 @@ Once the server is running, the documentation can be accessed at:
 🔗 http://localhost:8000/docs/api#/
 
 
-## 🗄️ Database Configuration
-
-You can use MySQL database, or for quick setup and testing, SQLite is recommended.
-
-To use SQLite:
-
-1. Set your `.env` file to use SQLite:
-    ```
-    DB_CONNECTION=sqlite
-    ```
-
-2. If the `database/database.sqlite` file does not exist, running `php artisan migrate` will prompt you to create it:
-    ```
-    WARN  The SQLite database configured for this application does not exist: database/database.sqlite.
-    ```
-
-    Type `yes` when prompted, and Laravel will create the file automatically.
-
-Run migrations after configuring your database:
-```bash
-php artisan migrate
-```
-
 There is a database structure file (database.mwb) located inside the database folder. This file is intended to be opened with MySQL Workbench.
 ## ▶️ How to run the project
 
-```bash
-git clone https://github.com/luisperestrelo19/Hijiffy
-cd hijiffy-backend
-composer install
-cp .env.example .env
-php artisan key:generate
-php artisan migrate
-php artisan serve
-```
+### 📝 Step-by-step Setup
+
+1. **Clone the repository**
+    ```bash
+    git clone https://github.com/luisperestrelo19/Hijiffy
+    cd hijiffy-backend
+    ```
+
+2. **Install dependencies**
+    ```bash
+    composer install
+    ```
+
+3. **Copy environment file**
+    ```bash
+    cp .env.example .env
+    ```
+
+4. **Generate application key**
+    ```bash
+    php artisan key:generate
+    ```
+
+5. **Start Docker containers**
+    ```bash
+    cd docker
+    docker compose up
+    ```
+
+6. **Run database migrations**
+    ```bash
+    php artisan migrate
+    ```
+
+7. **Serve the application**
+    ```bash
+    php artisan serve
+    ```
 
 ## 🤖 Dialogflow Agent
 
-- Export included in the `dialogflow/` folder with .json files for each Intent
+- Exports included in the `dialogflow/` folder with .json files for each Intent
 - Webhook: POST to `/api/webhook`
 
 
@@ -186,3 +193,19 @@ On a successful request (e.g. `POST /api/login`), the API returns a JSON object 
   "token": "8|ndhvf5iXmQwGOYijR84qP42Os0uHs5D3tsWxH1oR962e8de4"
 }
 ```
+
+## 🐳 Docker Setup
+
+Navigate to the docker folder:
+
+```bash
+cd docker
+```
+
+Start containers:
+
+```bash
+docker compose up
+```
+
+The `.env.example` file includes credentials. After setup, run the project as usual.

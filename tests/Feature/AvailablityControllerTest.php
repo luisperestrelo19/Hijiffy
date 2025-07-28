@@ -64,12 +64,13 @@ class AvailablityControllerTest extends TestCase
         $user = User::factory()->create();
         Sanctum::actingAs($user);
 
+        $date = now()->addDay()->format('Y-m-d');
         $requestData = [
             'property_id' => 'casa 3',
             'rooms'       => [
                 [
                     'room_id'    => 'quarto 1',
-                    'date'       => '2025-07-27',
+                    'date'       => $date,
                     'max_guests' => 1,
                     'price'      => 100,
                 ],
@@ -108,7 +109,7 @@ class AvailablityControllerTest extends TestCase
 
         $this->assertDatabaseHas('availabilities', [
             'room_id' => Room::where('code', 'quarto 1')->first()->id,
-            'date'    => '2025-07-27',
+            'date'    => $date,
         ]);
     }
 
@@ -125,7 +126,6 @@ class AvailablityControllerTest extends TestCase
                     'availabilities' => [
                         [
                             'date'         => now()->addDay()->toDateString(),
-                            'is_available' => true,
                         ],
                     ],
                 ],

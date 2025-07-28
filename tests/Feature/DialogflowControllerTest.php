@@ -59,21 +59,23 @@ class DialogflowControllerTest extends TestCase
         $roomTotal         = $pluckedProperties->count();
         $price             = $pluckedProperties->sortBy('price')->first()->price;
 
+        $formattedDateTime = $date->format('Y-m-d\TH:i:sP');
         $response = $this->postJson(route('webhook'), [
             'responseId'  => '64bd84ea-64e5-4b92-875f-6795f10150b3-6583c630',
             'queryResult' => [
                 'queryText'  => "I want to book from $month $day to $month $day for 2 people",
                 'parameters' => [
                     'guests'    => 2,
-                    'check_in'  => $date->format('Y-m-d\TH:i:sP'),
-                    'check_out' => $date->format('Y-m-d\TH:i:sP'),
+                    'check_in'  => $formattedDateTime,
+                    'check_out' => $formattedDateTime,
                 ],
             ],
         ]);
 
+        $dateFormat = $date->format('Y-m-d');
         $response->assertOk()
             ->assertJson([
-                'fulfillmentText' => "Yes! We have $roomTotal rooms available from 2025-07-27 to 2025-07-27, starting at {$price}€. Want to reserve now?",
+                'fulfillmentText' => "Yes! We have $roomTotal rooms available from $dateFormat to $dateFormat, starting at {$price}€. Want to reserve now?",
             ]);
     }
 }
