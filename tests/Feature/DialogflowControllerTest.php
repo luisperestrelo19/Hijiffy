@@ -78,4 +78,61 @@ class DialogflowControllerTest extends TestCase
                 'fulfillmentText' => "Yes! We have $roomTotal rooms available from $dateFormat to $dateFormat, starting at {$price}€. Want to reserve now?",
             ]);
     }
+
+    public function test_webhook_dialogflow_with_invalid_dates(): void
+    {
+        $response = $this->postJson(route('webhook'), [
+            'responseId'  => 'invalid-response-id',
+            'queryResult' => [
+                'queryText'  => 'I want to book from an invalid date',
+                'parameters' => [
+                    'guests'    => 2,
+                    'check_in'  => 'not-a-date',
+                    'check_out' => 'also-not-a-date',
+                ],
+            ],
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'fulfillmentText' => 'Sorry, there was an error processing the dates provided.',
+            ]);
+    }
+
+    public function test_webhook_dialogflow_with_missing_parameters(): void
+    {
+        $response = $this->postJson(route('webhook'), [
+            'responseId'  => 'missing-params-id',
+            'queryResult' => [
+                'queryText'  => 'I want to book a room',
+                'parameters' => [
+                    // No guests, check_in, or check_out
+                ],
+            ],
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'fulfillmentText' => "Sorry, we don't have rooms available for those dates.",
+            ]);
+    }
+
+    public function test_webhook_dialogflow_with_partial_parameters(): void
+    {
+        $response = $this->postJson(route('webhook'), [
+            'responseId'  => 'partial-params-id',
+            'queryResult' => [
+                'queryText'  => 'I want to book for 2 guests',
+                'parameters' => [
+                    'guests' => 2,
+                    // Missing check_in and check_out
+                ],
+            ],
+        ]);
+
+        $response->assertOk()
+            ->assertJson([
+                'fulfillmentText' => "Sorry, we don't have rooms available for those dates.",
+            ]);
+    }
 }
