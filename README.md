@@ -42,7 +42,7 @@ There is a database structure file (database.mwb) located inside the database fo
 1. **Clone the repository**
     ```bash
     git clone https://github.com/luisperestrelo19/Hijiffy
-    cd hijiffy-backend
+    cd hijiffy
     ```
 
 2. **Install dependencies**
@@ -71,7 +71,12 @@ There is a database structure file (database.mwb) located inside the database fo
     php artisan migrate
     ```
 
-7. **Serve the application**
+7. **Run script to insert data**
+    ```bash
+    php artisan hijiffy:import-properties
+    ```
+
+8. **Serve the application**
     ```bash
     php artisan serve
     ```
@@ -149,15 +154,14 @@ A custom Artisan command is available to import properties data from a JSON file
 ```bash
 php artisan hijiffy:import-properties
 ```
-The data file to import should be placed in the same folder as the `ImportProperties` command. Make sure your JSON file is located alongside `app/Console/Commands/ImportProperties/ImportProperties.php` before running the command.
+Make sure your JSON file is located alongside `app/Console/Commands/ImportProperties/ImportProperties.php` before running the command.
 
 You can find the command implementation in `app/Console/Commands/ImportProperties/ImportProperties.php`.
 
 
 ### 📦 API responses
 
-The API always returns a JSON object. It does not include a specific property indicating success or failure. I
-nstead, the outcome of the request is determined by the HTTP status code.
+The API always returns a JSON object. It does not include a specific property indicating success or failure. Instead, the outcome of the request is determined by the HTTP status code.
 
 ### ❌ Example: Validation Error Response
 
@@ -190,7 +194,7 @@ On a successful request (e.g. `POST /api/login`), the API returns a JSON object 
     "name": "Luís Perestrelo",
     "email": "luisperestrelo19@gmail.com"
   },
-  "token": "8|ndhvf5iXmQwGOYijR84qP42Os0uHs5D3tsWxH1oR962e8de4"
+  "token": "1|ndhvf5iXmQwGOYijR84qP42Os0uHs5D3tsWxH1oR962e8de4"
 }
 ```
 
