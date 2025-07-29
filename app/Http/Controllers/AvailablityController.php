@@ -16,7 +16,7 @@ class AvailablityController extends Controller
 {
     public function index(AvailabilityQueryParams $request)
     {
-        $properties = (new CacheService())
+        $properties = (new CacheService(config('hijiffy.cache.module_prefix_availability')))
             ->cacheWithTag('availabilities', $request->all(), function () use ($request) {
                 return Property::search($request)->get();
             });
@@ -28,7 +28,7 @@ class AvailablityController extends Controller
     {
         $property = (new AvailabilityService())->insertProperty($request->validated());
 
-        (new CacheService())->forgetTag('availabilities');
+        (new CacheService(config('hijiffy.cache.module_prefix_availability')))->forgetTag('availabilities');
         return response()->json(PropertyResource::make($property->load('rooms.availabilities')), 201);
     }
 }

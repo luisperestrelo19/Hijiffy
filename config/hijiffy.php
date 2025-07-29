@@ -3,6 +3,10 @@
 declare(strict_types=1);
 
 return [
+    'cache' => [
+        'module_prefix_availability' => 'properties_search',
+        'ttl'                        => env('HIIJIFFY_CACHE_TTL', 600), // Default TTL for cache entries in seconds
+    ],
     'rate_limits' => [
         'api' => [
             'limit' => env('HIIJIFFY_RATE_LIMIT_API', 100),

@@ -35,7 +35,7 @@ class DialogflowController extends Controller
             ]);
         }
 
-        $properties = (new CacheService())
+        $properties = (new CacheService(config('hijiffy.cache.module_prefix_availability')))
             ->cacheWithTag('availabilities', $request->all(), function () use ($searchFields) {
                 return Property::search($searchFields)->get();
             });

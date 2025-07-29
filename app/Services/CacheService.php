@@ -9,8 +9,13 @@ use Illuminate\Support\Facades\Cache;
 
 class CacheService
 {
-    public string $cacheKeyPrefix = 'properties_search';
-    public int $defaultTtl = 600; // Default time to live in seconds
+    public int $defaultTtl;
+
+    public function __construct(public string $cacheKeyPrefix)
+    {
+        $this->defaultTtl = (int) config('hijiffy.cache.ttl');
+    }
+
     /**
      * Caches the result of a callback using a unique key generated from the module name and sorted filters.
      * Stores a list of cache keys per module to allow grouped invalidation.
