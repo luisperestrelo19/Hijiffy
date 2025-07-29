@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 return [
     'cache' => [
+        'enabled'                    => env('HIIJIFFY_CACHE_ENABLED', true), // Enable or disable caching
         'module_prefix_availability' => 'properties_search',
         'ttl'                        => env('HIIJIFFY_CACHE_TTL', 600), // Default TTL for cache entries in seconds
     ],

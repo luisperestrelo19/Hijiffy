@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Cache;
 class CacheService
 {
     public int $defaultTtl;
+    public bool $enabled;
 
     public function __construct(public string $cacheKeyPrefix)
     {
         $this->defaultTtl = (int) config('hijiffy.cache.ttl');
+        $this->enabled    = (bool) config('hijiffy.cache.enabled');
     }
 
     /**
@@ -30,6 +32,9 @@ class CacheService
      */
     public function cacheWithTag(string $module, array $data, Closure $callback)
     {
+        if (!$this->enabled) {
+            return $callback();
+        }
         //just to ensure the filters are sorted for consistent cache keys to create always the same tag
         ksort($data);
         $tag = md5(json_encode($data));
@@ -47,6 +52,9 @@ class CacheService
 
     public function forgetTag(string $tag)
     {
+        if (!$this->enabled) {
+            return;
+        }
         $tagKeysKey = "{$this->cacheKeyPrefix}_keys_{$tag}";
         $taggedKeys = Cache::get($tagKeysKey, []);
 

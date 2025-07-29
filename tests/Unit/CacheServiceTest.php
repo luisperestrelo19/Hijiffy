@@ -30,6 +30,19 @@ class CacheServiceTest extends TestCase
         $this->assertEquals($prefix, $service->cacheKeyPrefix);
     }
 
+    public function test_constructor_sets_enabled_from_config(): void
+    {
+        Config::set('hijiffy.cache.enabled', false);
+        $service = new CacheService('test');
+
+        $this->assertFalse($service->enabled);
+
+        Config::set('hijiffy.cache.enabled', true);
+        $service2 = new CacheService('test2');
+
+        $this->assertTrue($service2->enabled);
+    }
+
     public function test_cache_with_tag_stores_and_retrieves_data(): void
     {
         $module         = 'properties';
@@ -118,11 +131,64 @@ class CacheServiceTest extends TestCase
         $this->assertEmpty($taggedKeysAfter);
     }
 
+
+
+    public function test_cache_disabled_executes_callback_every_time(): void
+    {
+        // Set cache to disabled
+        Config::set('hijiffy.cache.enabled', false);
+        $disabledCacheService = new CacheService('disabled_prefix');
+
+        $module = 'properties';
+        $data = ['city' => 'Lisbon', 'guests' => 2];
+        $callbackExecutionCount = 0;
+
+        $callback = function () use (&$callbackExecutionCount) {
+            $callbackExecutionCount++;
+            return 'result_' . $callbackExecutionCount;
+        };
+
+        // First call - should execute callback (cache disabled)
+        $firstResult = $disabledCacheService->cacheWithTag($module, $data, $callback);
+        $this->assertEquals('result_1', $firstResult);
+        $this->assertEquals(1, $callbackExecutionCount);
+
+        // Second call with same parameters - should execute callback again (cache disabled)
+        $secondResult = $disabledCacheService->cacheWithTag($module, $data, $callback);
+        $this->assertEquals('result_2', $secondResult); // Different result
+        $this->assertEquals(2, $callbackExecutionCount); // Callback executed again
+
+        // Third call - should execute callback again
+        $thirdResult = $disabledCacheService->cacheWithTag($module, $data, $callback);
+        $this->assertEquals('result_3', $thirdResult); // Different result
+        $this->assertEquals(3, $callbackExecutionCount); // Callback executed again
+
+        // Verify that no cache keys were created
+        $tagKeysKey = "disabled_prefix_keys_{$module}";
+        $taggedKeys = Cache::get($tagKeysKey, []);
+        $this->assertEmpty($taggedKeys); // Should be empty since cache is disabled
+    }
+
+    public function test_forget_tag_with_cache_disabled_does_nothing(): void
+    {
+        // Set cache to disabled
+        Config::set('hijiffy.cache.enabled', false);
+        $disabledCacheService = new CacheService('disabled_prefix');
+
+        // This should not throw any errors and should return immediately
+        $disabledCacheService->forgetTag('properties');
+
+        // Verify that forgetTag method completes successfully when cache is disabled
+        $this->assertTrue(true); // If we reach this point, the method didn't crash
+    }
+
+
     protected function setUp(): void
     {
         parent::setUp();
 
         Config::set('hijiffy.cache.ttl', 600);
+        Config::set('hijiffy.cache.enabled', true); // Ensure cache is enabled by default for tests
 
         $this->cacheService = new CacheService($this->cacheKeyPrefix);
     }
