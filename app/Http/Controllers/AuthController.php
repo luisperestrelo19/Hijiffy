@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Hash;
 class AuthController extends Controller
 {
     /**
-     * Handle the user login.
+     * Login
      *
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
@@ -35,6 +35,12 @@ class AuthController extends Controller
         ]));
     }
 
+    /**
+     * Logout
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\Response
+     */
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Models\Property;
+use App\Services\CacheService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -30,11 +31,14 @@ class DialogflowController extends Controller
             ];
         } catch (\Exception $e) {
             return response()->json([
-                'fulfillmentText' => "Sorry, there was an error processing the dates provided.",
+                'fulfillmentText' => 'Sorry, there was an error processing the dates provided.',
             ]);
         }
 
-        $properties = Property::search($searchFields)->get();
+        $properties = (new CacheService())
+            ->cacheWithTag('availabilities', $request->all(), 600, function () use ($searchFields) {
+                return Property::search($searchFields)->get();
+            });
 
         if ($properties->isNotEmpty() && $properties->pluck('rooms')->flatten()->isNotEmpty()) {
             $pluckedProperties = $properties->pluck('rooms')->flatten();

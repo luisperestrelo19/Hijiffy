@@ -10,12 +10,16 @@ use App\Http\Resources\AvailabilitiesSearchResource;
 use App\Http\Resources\PropertyResource;
 use App\Models\Property;
 use App\Services\AvailabilityService;
+use App\Services\CacheService;
 
 class AvailablityController extends Controller
 {
     public function index(AvailabilityQueryParams $request)
     {
-        $properties = Property::search($request)->get();
+        $properties = (new CacheService())
+            ->cacheWithTag('availabilities', $request->all(), 600, function () use ($request) {
+                return Property::search($request)->get();
+            });
 
         return response()->json(AvailabilitiesSearchResource::collection($properties));
     }
@@ -24,6 +28,7 @@ class AvailablityController extends Controller
     {
         $property = (new AvailabilityService())->insertProperty($request->validated());
 
+        (new CacheService())->forgetTag('availabilities');
         return response()->json(PropertyResource::make($property->load('rooms.availabilities')), 201);
     }
 }
