@@ -13,6 +13,7 @@ This project is a Laravel microservice designed to manage availability reservati
 - Authentication via Laravel Sanctum tokens
 - Dialogflow ES (Export included)
 - Rate limiting
+- Cache
 
 ## 🚀 Available Endpoints
 
@@ -159,7 +160,7 @@ Make sure your JSON file is located alongside `app/Console/Commands/ImportProper
 You can find the command implementation in `app/Console/Commands/ImportProperties/ImportProperties.php`.
 
 
-### 📦 API responses
+## 📦 API responses
 
 The API always returns a JSON object. It does not include a specific property indicating success or failure. Instead, the outcome of the request is determined by the HTTP status code.
 
@@ -213,3 +214,7 @@ docker compose up
 ```
 
 The `.env.example` file includes credentials. After setup, run the project as usual.
+
+## 🗄️ Cache
+
+The caching system is designed to mimic Redis-style cache tagging, for easier testing and setup, especially for examiners. The cache driver is set to use the file system by default. You can configure cache settings—such as enabling/disabling caching, setting the TTL (time-to-live) directly in the `.env` file.
