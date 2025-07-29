@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Cache;
 class CacheService
 {
     public string $cacheKeyPrefix = 'properties_search';
-
+    public int $defaultTtl = 600; // Default time to live in seconds
     /**
      * Caches the result of a callback using a unique key generated from the module name and sorted filters.
      * Stores a list of cache keys per module to allow grouped invalidation.
@@ -23,21 +23,21 @@ class CacheService
      * @param Closure $callback The callback whose result should be cached.
      * @return mixed            The cached value or the result of the callback.
      */
-    public function cacheWithTag(string $module, array $filters, int $ttl, Closure $callback)
+    public function cacheWithTag(string $module, array $data, Closure $callback)
     {
         //just to ensure the filters are sorted for consistent cache keys to create always the same tag
-        ksort($filters);
-        $tag = md5(json_encode($filters));
+        ksort($data);
+        $tag = md5(json_encode($data));
 
         $tagKeysKey = "{$this->cacheKeyPrefix}_keys_{$module}";
         $taggedKeys = Cache::get($tagKeysKey, []);
 
         if (!in_array($tag, $taggedKeys)) {
             $taggedKeys[] = $tag;
-            Cache::put($tagKeysKey, $taggedKeys, $ttl);
+            Cache::put($tagKeysKey, $taggedKeys, $this->defaultTtl);
         }
 
-        return Cache::remember($tag, $ttl, $callback);
+        return Cache::remember($tag, $this->defaultTtl, $callback);
     }
 
     public function forgetTag(string $tag)

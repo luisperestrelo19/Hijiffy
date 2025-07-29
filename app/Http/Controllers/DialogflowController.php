@@ -36,7 +36,7 @@ class DialogflowController extends Controller
         }
 
         $properties = (new CacheService())
-            ->cacheWithTag('availabilities', $request->all(), 600, function () use ($searchFields) {
+            ->cacheWithTag('availabilities', $request->all(), function () use ($searchFields) {
                 return Property::search($searchFields)->get();
             });
 

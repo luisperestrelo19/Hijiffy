@@ -17,7 +17,7 @@ class AvailablityController extends Controller
     public function index(AvailabilityQueryParams $request)
     {
         $properties = (new CacheService())
-            ->cacheWithTag('availabilities', $request->all(), 600, function () use ($request) {
+            ->cacheWithTag('availabilities', $request->all(), function () use ($request) {
                 return Property::search($request)->get();
             });
 
